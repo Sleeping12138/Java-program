@@ -1,0 +1,71 @@
+package Demo1;
+
+import java.util.*;
+
+// 堆优化版的Dijkstra算法
+public class DijkstraHeap {
+    public static final int N = 510;
+    public static int n, m;
+    public static Map<Integer, HashMap<Integer, Integer>> map = new HashMap<>();
+    public static int[] path = new int[N];
+    public static boolean[] vis = new boolean[N];
+
+    public static class Pair implements Comparable<Pair> {
+        int node;
+        int weight;
+
+        public Pair(int node, int weight) {
+            this.node = node;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            return Integer.compare(this.weight, o.weight);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        n = in.nextInt();
+        m = in.nextInt();
+        for (int i = 1; i <= n; i++) {
+            map.put(i, new HashMap<>());
+        }
+
+        for (int i = 0; i < m; i++) {
+            int x = in.nextInt(), y = in.nextInt(), z = in.nextInt();
+            map.get(x).put(y, Math.min(map.get(x).getOrDefault(y, Integer.MAX_VALUE), z));
+        }
+
+        System.out.println(dijkstra());
+    }
+
+    private static int dijkstra() {
+        Arrays.fill(path, Integer.MAX_VALUE);
+        path[1] = 0;
+
+        PriorityQueue<Pair> queue = new PriorityQueue<>();
+        queue.offer(new Pair(1, 0));
+
+        while (!queue.isEmpty()) {
+            Pair temp = queue.poll();
+            int node = temp.node, weight = temp.weight;
+
+            if (vis[node] || path[node] == Integer.MAX_VALUE) continue;
+
+            vis[node] = true;
+
+            for (Map.Entry<Integer, Integer> entry : map.get(node).entrySet()) {
+                int next = entry.getKey(), nextWeight = entry.getValue();
+                if (path[node] + nextWeight < path[next]) {
+                    path[next] = path[node] + nextWeight;
+                    queue.offer(new Pair(next, path[next]));
+                }
+            }
+
+        }
+
+        return path[n] == Integer.MAX_VALUE ? -1 : path[n];
+    }
+}
