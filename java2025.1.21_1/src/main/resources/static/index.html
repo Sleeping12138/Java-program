@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    登录人: <span id="loginUser" class="loginUser"></span>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        $.ajax({
+            type: 'get',
+            url: 'user/getLoginUser',
+            success(result) {
+                if (result) {
+                    $(".loginUser").text(result);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
