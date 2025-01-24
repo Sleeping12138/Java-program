@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">点击发送Ajax请求</button>
+
+    <!-- 使用XMLHttpRequest -->
+    <script>
+        const btn = document.querySelector('#btn');
+        btn.addEventListener('click', () => {
+            const xhr = XMLHttpRequest();
+            xhr.open('get', 'http://127.0.0.1:8080/test/data');
+            xhr.send();
+            xhr.onrea
+        })
+    </script>
+</body>
+
+</html>

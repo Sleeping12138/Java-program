@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板</title>
+    <style>
+        .container {
+            width: 350px;
+            height: 300px;
+            margin: 0 auto;
+            /* border: 1px black solid; */
+            text-align: center;
+        }
+
+        .grey {
+            color: grey;
+        }
+
+        .container .row {
+            width: 350px;
+            height: 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container .row input {
+            width: 260px;
+            height: 30px;
+        }
+
+        #submit {
+            width: 350px;
+            height: 40px;
+            background-color: orange;
+            color: white;
+            border: none;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>留言板</h1>
+        <p class="grey">输入后点击提交, 会将信息显示下方空白处</p>
+        <div class="row">
+            <span>谁:</span> <input type="text" name="" id="from">
+        </div>
+        <div class="row">
+            <span>对谁:</span> <input type="text" name="" id="to">
+        </div>
+        <div class="row">
+            <span>说什么:</span> <input type="text" name="" id="say">
+        </div>
+        <input type="button" value="提交" id="submit">
+        <!-- <div>A 对 B 说: hello</div> -->
+    </div>
+
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script>
+        $.ajax({
+            type: 'GET',
+            url: '/message/getList',
+            success(messageList) {
+                for (let message of messageList) {
+                    let divE = "<div>" + message.from + "对" + message.to + "说:" + message.message + "</div>";
+                    $(".container").append(divE)
+                }
+            }
+        })
+
+        const btn = document.querySelector('#submit');
+        btn.addEventListener('click', () => {
+            //1. 获取留言的内容
+            var from = $('#from').val();
+            var to = $('#to').val();
+            var say = $('#say').val();
+            if (from == '' || to == '' || say == '') {
+                return;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/message/publish',
+                data: JSON.stringify({
+                    from: from,
+                    to: to,
+                    message: say
+                }),
+                // 发送给后端的数据格式
+                contentType: 'application/json',
+                // dataType是接收到的数据格式
+                success(result) {
+                    let ret = JSON.parse(result);
+                    if (ret.ok === 1) {
+                        //2. 构造节点
+                        var divE = "<div>" + from + "对" + to + "说:" + say + "</div>";
+                        //3. 把节点添加到页面上
+                        $(".container").append(divE);
+
+                        //4. 清空输入框的值
+                        $('#from').val("");
+                        $('#to').val("");
+                        $('#say').val("");
+                    }
+                }
+            })
+        })
+
+    </script>
+</body>
+
+</html>
