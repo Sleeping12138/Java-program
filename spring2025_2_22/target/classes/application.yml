@@ -1,0 +1,47 @@
+spring.application.name: spring2025_2_22
+
+myKey: 1000
+
+hello: hello
+
+aa:
+  bb:
+    cc: 1000
+
+# 字符串值
+string: Hello
+
+# 布尔值，true或false
+boolean: true
+
+# 整数
+int.value: 10
+
+# 浮点数
+float.value: 3.14159
+
+# Null，~代表null
+null.value: ~
+
+# "" 空字符串
+empty.value: ''
+
+student:
+  name: 'zhangsan'
+  age: 18
+
+
+array:
+  number:
+    - 10
+    - 20
+    - 30
+    - 40
+    - 50
+
+test:
+  str:
+    key1: hello
+    key2: the
+    key3: world
+
