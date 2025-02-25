@@ -1,0 +1,12 @@
+spring:
+  application:
+    name:
+      spring2025_2_25
+
+captcha:
+  width: 150
+  height: 50
+  session:
+    code: CAPTCHA_CODE
+    time: CAPTCHA_TIME
+
