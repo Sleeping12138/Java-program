@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.spring2025_3_6.Mapper.UserInfoMapper">
+
+    <select id="selectUserInfo" resultType="com.test.spring2025_3_6.Model.UserInfo">
+        SELECT
+            ta.id,
+            ta.title,
+            ta.content,
+            ta.uid,
+            tb.username,
+            tb.age,
+            tb.gender
+        FROM
+            articleinfo ta
+                LEFT JOIN user_info tb ON ta.uid = tb.id
+        WHERE
+            ta.id =1
+    </select>
+</mapper>
