@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring2025_3_9
+  data:
+    redis:
+      host: 192.168.60.101
+      port: 6379
+      password: woshizjy12138
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
+
+
+
