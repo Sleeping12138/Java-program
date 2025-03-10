@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.spring2025_3_10.Mapper.UserInfoMapper">
+
+    <sql id="tmep">
+        select * from user_info
+    </sql>
+
+    <insert id="insertUserInfo">
+        INSERT INTO user_info (username,`password`,
+        <if test="age!=null">
+            age,
+        </if>
+        phone) VALUES (#{username},#{password},
+        <if test="age!=null">
+            #{age},
+        </if>
+        #{phone})
+    </insert>
+
+    <insert id="insertUserInfo2">
+        INSERT INTO user_info (
+        <trim suffixOverrides="," prefixOverrides=",">
+            <if test="username!=null">username,</if>
+            <if test="password!=null">password,</if>
+            <if test="age!=null">age,</if>
+            <if test="phone!=null">phone,</if>
+        </trim>
+        )
+        VALUES(
+        <trim prefixOverrides="," suffixOverrides=",">
+            <if test="username!=null">#{username},</if>
+            <if test="password!=null">#{password},</if>
+            <if test="age!=null">#{age},</if>
+            <if test="phone!=null">#{phone},</if>
+        </trim>
+        )
+    </insert>
+    <update id="updateUserInfo">
+        UPDATE user_info
+        <set>
+            <if test="age!=null">
+                age = #{age},
+            </if>
+            <if test="phone!=null">
+                phone = #{phone},
+            </if>
+        </set>
+        WHERE username = #{username}
+    </update>
+    <delete id="deleteUserInfo">
+        DELETE FROM user_info WHERE id IN
+        <foreach collection="nums" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectUserInfo" resultType="com.test.spring2025_3_10.Model.UserInfo">
+        <include refid="tmep"></include>
+    </select>
+    <select id="selectUserInfo2" resultType="com.test.spring2025_3_10.Model.UserInfo">
+        SELECT * FROM user_info
+        <where>
+            <if test="username!=null">
+                AND username = #{username}
+            </if>
+            <if test="password!=null">
+                AND `password` = #{password}
+            </if>
+            <if test="age!=null">
+                AND age = #{age}
+            </if>
+        </where>
+    </select>
+</mapper>
