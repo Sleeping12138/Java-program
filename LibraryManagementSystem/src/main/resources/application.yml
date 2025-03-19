@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: LibraryManagementSystem
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/book_test?characterEncoding=utf8&useSSL=false
+    username: root
+    password: woshizjy12138
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  configuration: # 配置打印 MyBatis日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true #配置驼峰自动转换
+  mapper-locations: classpath:mapper/**Mapper.xml #设置xml文件路径
