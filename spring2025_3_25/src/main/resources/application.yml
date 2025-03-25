@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: spring2025_3_25
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 8888
