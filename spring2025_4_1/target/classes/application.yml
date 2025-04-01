@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring2025_4_1
+  rabbitmq:
+    host: 192.168.60.101
+    port: 5672  #默认为5672
+    username: student
+    password: admin
+    virtual-host: order
+    listener:
+      simple:
+        acknowledge-mode: auto
+        retry:
+          enabled: true # 开启消费者失败重试
+          initial-interval: 5000ms # 初始失败等待时长为5秒
+          max-attempts: 5 # 最大重试次数(包括自身消费的一次)
+    publisher-confirm-type: correlated #消息发送确认
