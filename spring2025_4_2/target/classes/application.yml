@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring2025_4_2
+  rabbitmq:
+    host: 192.168.60.101
+    port: 5672  #默认为5672
+    username: student
+    password: admin
+    virtual-host: order
+    # 配置确认方式
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 5

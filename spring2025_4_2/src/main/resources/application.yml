@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring2025_4_2
+  rabbitmq:
+    host: 192.168.60.101
+    port: 5672
+    username: student
+    password: admin
+    virtual-host: order
+    listener:
+      simple:
+        acknowledge-mode: manual
+        # 设置消费者的最大未确认消息数
+        prefetch: 5
+
