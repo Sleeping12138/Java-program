@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.spring2025_4_4.Mapper.UserInfoMapper2">
+<!--    <sql id="test">-->
+<!--        id,username,password,age-->
+<!--    </sql>-->
+
+<!--    <select id="getUserInfoById" resultType="com.test.spring2025_4_4.Model.UserInfo">-->
+<!--        select-->
+<!--            <include refid="test"></include>-->
+<!--            from user_info where id = #{id}-->
+<!--    </select>-->
+</mapper>
