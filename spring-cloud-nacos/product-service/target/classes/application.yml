@@ -8,10 +8,15 @@ spring:
     username: root
     password: woshizjy12138
     driver-class-name: com.mysql.cj.jdbc.Driver
-    cloud:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        cluster-name: SH
+        namespace: 5ecb5e39-8f64-4cf1-964c-1a15009ae657
+    loadbalancer:
       nacos:
-        discovery:
-          server-addr: localhost:8848
+        enabled: true
 
 # 设置 Mybatis 的 xml 保存路径
 mybatis:

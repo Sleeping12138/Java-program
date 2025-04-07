@@ -11,7 +11,10 @@ spring:
   cloud:
     nacos:
       discovery:
+#        ephemeral: false
         server-addr: localhost:8848
+        cluster-name: SH
+        namespace: 5ecb5e39-8f64-4cf1-964c-1a15009ae657
     loadbalancer:
       nacos:
         enabled: true
