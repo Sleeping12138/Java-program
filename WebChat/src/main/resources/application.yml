@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: WebChat
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/java_chatroom?characterEncoding=utf8&useSSL=false
+    username: root
+    password: woshizjy12138
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration: # 配置打印 MyBatis-plus日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
