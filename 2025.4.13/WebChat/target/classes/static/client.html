@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页聊天</title>
+    <link rel="stylesheet" href="./css/comment.css">
+    <link rel="stylesheet" href="./css/client.css">
+
+</head>
+
+<body>
+    <div class="cover"></div>
+    <div class="client-container">
+        <div class="main">
+            <div class="left">
+                <div class="user">
+
+                </div>
+                <div class="search">
+                    <input type="text">
+                    <button></button>
+                </div>
+                <div class="tab">
+                    <div class="tab-session"></div>
+                    <div class="tab-friend"></div>
+                </div>
+                <ul class="list" id="session-list">
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li class="selected">
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                </ul>
+
+                <ul class="list hide" id="friend-list">
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="right">
+                <div class="title">lisi</div>
+                <div class="message-show">
+                    <div class="message message-left">
+                        <div class="box">
+                            <h3>lisi</h3>
+                            <p class="p-left">今天吃啥</p>
+                        </div>
+                    </div>
+                    <div class="message message-right">
+                        <div class="box">
+                            <h3 class="h3-right">zhangsan</h3>
+                            <p class="p-right">随便</p>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="message-input"></textarea>
+                <div class="ctrl">
+                    <button>发送</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-3.7.1.min - .js"></script>
+    <script src="./js/comment.js"></script>
+    <script src="./js/client.js"></script>
+    <script>
+        function getUserInfo() {
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8080/user/getUserInfo?userId=' + localStorage.getItem('id'),
+                success: function (result) {
+                    if (result != null && result.userId != 0) {
+                        $('.user').text(result.userName);
+                    } else {
+                        alert("当前用户未登录!");
+                        location.assign('login.html');
+                    }
+                }
+            });
+        }
+
+        getUserInfo();
+    </script>
+</body>
+
+</html>
