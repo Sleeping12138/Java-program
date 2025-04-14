@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/comment.css">
+    <link rel="stylesheet" href="./css/register.css">
+</head>
+
+<body>
+    <div class="nav">网页聊天</div>
+    <div class="login-container">
+        <div class="login-dialog">
+            <h3>注册</h3>
+            <div class="row">
+                <span>用户名</span>
+                <input type="text" id="username">
+            </div>
+            <div class="row">
+                <span>密码</span>
+                <input type="password" id="password">
+            </div>
+            <div class="row">
+                <button id="submit">注册</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-3.7.1.min - .js"></script>
+    <script>
+        let btn = document.querySelector('#submit');
+        btn.onclick = function () {
+            let username = document.querySelector('#username').value;
+            let password = document.querySelector('#password').value;
+            if (username == '' || password == '') {
+                alert('您输入的用户名或密码为空!');
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: 'http://127.0.0.1:8080/user/register',
+                data: {
+                    userName: username,
+                    password: password
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result != null && result.data && result.data.userId != null) {
+                        alert('注册成功!');
+                        location.assign('/login.html');
+                    } else {
+                        alert('注册失败!');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

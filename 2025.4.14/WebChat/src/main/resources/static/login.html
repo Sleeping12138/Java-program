@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/comment.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div class="nav">网页聊天</div>
+    <div class="login-container">
+        <div class="login-dialog">
+            <h3>登录</h3>
+            <div class="row">
+                <span>用户名</span>
+                <input type="text" id="username">
+            </div>
+            <div class="row">
+                <span>密码</span>
+                <input type="password" id="password">
+            </div>
+            <div class="row">
+                <button id="submit">登录</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-3.7.1.min - .js"></script>
+    <script>
+        // 获取按钮元素并进行绑定事件
+        let btn = document.querySelector('#submit');
+        console.log(btn);
+
+        btn.onclick = function () {
+            console.log("事件触发");
+            let username = document.querySelector('#username').value;
+            let password = document.querySelector('#password').value;
+            console.log(username, password);
+            if (username === '' || password === '') {
+                alert("用户名或密码为空!")
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: 'http://127.0.0.1:8080/user/login',
+                data: {
+                    userName: username,
+                    password: password
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result != null && result.data != null && result.data.userId != null) {
+                        localStorage.setItem('id', result.data.userId);
+                        localStorage.setItem('token', result.data.token);
+                        location.assign('/client.html');
+                    } else {
+                        alert("用户名或密码错误...")
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

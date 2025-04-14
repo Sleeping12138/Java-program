@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页聊天</title>
+    <link rel="stylesheet" href="./css/comment.css">
+    <link rel="stylesheet" href="./css/client.css">
+
+</head>
+
+<body>
+    <div class="cover"></div>
+    <div class="client-container">
+        <div class="main">
+            <div class="left">
+                <div class="user">
+
+                </div>
+                <div class="search">
+                    <input type="text">
+                    <button></button>
+                </div>
+                <div class="tab">
+                    <div class="tab-session"></div>
+                    <div class="tab-friend"></div>
+                </div>
+                <ul class="list" id="session-list">
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li class="selected">
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                    <li>
+                        <h3>lisi</h3>
+                        <p>晚上吃啥</p>
+                    </li>
+                </ul>
+
+                <ul class="list hide" id="friend-list">
+                    <!-- <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li>
+                    <li>
+                        <h4>lisi</h4>
+                    </li> -->
+                </ul>
+
+            </div>
+            <div class="right">
+                <div class="title">lisi</div>
+                <div class="message-show">
+                    <div class="message message-left">
+                        <div class="box">
+                            <h3>lisi</h3>
+                            <p class="p-left">今天吃啥</p>
+                        </div>
+                    </div>
+                    <div class="message message-right">
+                        <div class="box">
+                            <h3 class="h3-right">zhangsan</h3>
+                            <p class="p-right">随便</p>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="message-input"></textarea>
+                <div class="ctrl">
+                    <button>发送</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-3.7.1.min - .js"></script>
+    <script src="./js/comment.js"></script>
+    <script src="./js/client.js"></script>
+    <script>
+        function getUserInfo() {
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8080/user/getUserInfo?userId=' + localStorage.getItem('id'),
+                success: function (result) {
+                    if (result != null && result.data != null && result.data.userId != 0) {
+                        $('.user').text(result.data.userName);
+                    } else {
+                        alert("当前用户未登录!");
+                        location.assign('login.html');
+                    }
+                }
+            });
+        }
+        getUserInfo();
+        function getFriendList() {
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8080/user/getFriendList?userId=' + localStorage.getItem('id'),
+                success: function (result) {
+                    let friendListUL = document.querySelector('#friend-list');
+                    friendListUL.innerHTML = '';
+                    for (let friend of result.data) {
+                        let li = document.createElement('li');
+                        li.innerHTML = '<h4>' + friend.friendName + '</h4>';
+                        li.setAttribute('friend-id', friend.friendId);
+                        friendListUL.appendChild(li);
+                    }
+                },
+                error: function () {
+                    console.log('获取好友列表失败!');
+                }
+            });
+        }
+        getFriendList();
+
+        function getSessionList() {
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8080/user/getSessionList?userId=' + localStorage.getItem('id'),
+                success: function (result) {
+                    let sessionList = document.querySelector('#session-list');
+                    sessionList.innerHTML = '';
+
+                    console.log(result.data);
+                    for (let session of result.data) {
+                        let li = document.createElement('li');
+                        li.setAttribute('message-session-id', session.sessionId);
+
+                        li.innerHTML = '<h3>' + session.friends[0].friendName + '</h3>'
+                            + '<p>' + session.lastMessage + '</p>';
+                        sessionList.appendChild(li);
+
+                        li.onclick = function () {
+                            clickSession(li);
+                        }
+                    }
+
+                }
+            })
+        }
+        getSessionList();
+
+        function clickSession(currentLi) {
+            let alllis = document.querySelectorAll('#session-list>li');
+            activeSession(allLis, currentLi);
+
+            // 获取对话
+            let sessionId = currentLi.getAttribute("message-session-id");
+            getHistoryMessage(sessionId);
+        }
+
+        function activeSession(allLis, currentLi) {
+            for (let li of allLis) {
+                if (li == currentLi) {
+                    li.className = 'selected';
+                } else {
+                    li.className = ''
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
